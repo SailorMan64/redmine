@@ -3,6 +3,10 @@
 require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
+  # Subpath routing — ensures URL helpers include /mpi prefix
+  # Required for ZenEdit WebSocket URL generation and ActionCable
+  routes.default_url_options[:script_name] = "/mpi"
+  config.action_cable.allowed_request_origins = ["https://nextlevel.nexus"]
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.

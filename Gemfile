@@ -105,8 +105,7 @@ group :test do
   gem 'mocha', '>= 2.0.1'
   gem 'simplecov', '~> 0.22.0', :require => false
   gem "ffi", platforms: [:mingw, :x64_mingw, :mswin]
-  # For running system tests
-  gem 'puma'
+  # For running system tests (puma gem defined outside group)
   gem "capybara", ">= 3.39"
   gem 'selenium-webdriver', '>= 4.11.0'
   # RuboCop
@@ -126,3 +125,9 @@ end
 Dir.glob File.expand_path("../plugins/*/{Gemfile,PluginGemfile}", __FILE__) do |file|
   eval_gemfile file
 end
+
+# ActionCable WebSocket support
+gem 'redis', '~> 5.0'
+
+# Puma — used by test suite and standalone ActionCable ZenEdit server
+gem 'puma', '>= 5.0'
