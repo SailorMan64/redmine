@@ -38,6 +38,8 @@
 /tmp/test/*
 /tmp/thumbnails/*
 /vendor/cache
+/vendor/bundle
+/file_index
 *.rbc
 
 /.bundle
