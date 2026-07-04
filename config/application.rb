@@ -99,8 +99,16 @@ module RedmineApp
     # can change it (environments/ENV.rb would take precedence over it)
     config.log_level = Rails.env.production? ? :info : :debug
 
+    # Switched from :cookie_store to :cache_store 2026-07-04 (MP/CN):
+    # cookie_store hit Rails/browser's 4096-byte cookie size limit
+    # (ActionDispatch::Cookies::CookieOverflow) once enough session data
+    # accumulated (recently viewed projects, etc.) -- a hard 500 on any
+    # request that tried to write the session back. cache_store keeps
+    # only a small session ID in the cookie; the actual session data
+    # lives in Rails.cache (Redis, see production.rb), which has no such
+    # size ceiling.
     config.session_store(
-      :cookie_store,
+      :cache_store,
       :key => '_redmine_session',
       :path => config.relative_url_root || '/',
       :same_site => :lax

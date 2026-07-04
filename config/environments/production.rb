@@ -44,7 +44,7 @@ Rails.application.configure do
   config.log_tags = [:request_id]
 
   # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
+  config.cache_store = :redis_cache_store, { url: "redis://localhost:6379/4", namespace: "mpi_cache" }
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :log
