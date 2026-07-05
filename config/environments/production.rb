@@ -3,9 +3,17 @@
 require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
-  # Subpath routing — ensures URL helpers include /mpi prefix
-  # Required for ZenEdit WebSocket URL generation and ActionCable
-  routes.default_url_options[:script_name] = "/mpi"
+  # Subpath routing -- derived from RAILS_RELATIVE_URL_ROOT (set per-
+  # instance in the Apache vhost via SetEnv), not hardcoded. Bridges a
+  # gap for bare Rails.application.routes.url_helpers calls made outside
+  # a controller/view context (e.g. brt_customizer's hook code) -- those
+  # don't automatically pick up config.relative_url_root the way normal
+  # _path helpers do. Required for ZenEdit WebSocket URL generation,
+  # ActionCable, and BRT Customizer's custom.css route.
+  # Identical on every instance -- part of the shared next-level-core-6.0
+  # branch, no per-instance overlay needed for this value anymore.
+  # MP / CN 2026-07-05
+  routes.default_url_options[:script_name] = ENV['RAILS_RELATIVE_URL_ROOT'] if ENV['RAILS_RELATIVE_URL_ROOT'].present?
   config.action_cable.allowed_request_origins = ["https://nextlevel.nexus"]
   # Settings specified here will take precedence over those in config/application.rb.
 
