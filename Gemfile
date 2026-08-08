@@ -131,3 +131,4 @@ gem 'redis', '~> 5.0'
 
 # Puma — used by test suite and standalone ActionCable ZenEdit server
 gem 'puma', '>= 5.0'
+gem 'connection_pool', '< 3.0'
